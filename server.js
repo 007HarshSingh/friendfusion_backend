@@ -8,23 +8,23 @@ const fileUpload = require("express-fileupload");
 const { readdirSync } = require("fs");
 const dotenv = require("dotenv");
 dotenv.config();
-
 const app = express();
 app.use(express.json());
 app.use(cors(
+  {
 
-  
+    origin:["https://friendfusion-frontend.vercel.app/"],
+    methods:[ "GET","POST","PUT","DELETE"],
+    credentials:true
+  }
+
 ));
 app.use(
   fileUpload({
     useTempFiles: true,
   })
 );
-// hosting 
-// app.get("/", (req, res) => {
-//   app.use(express.static(path.resolve(__dirname, "frontend", "build")));
-//   res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-// });
+
 
 //routes
 readdirSync("./routes").map((r) => app.use("/", require("./routes/" + r)));
